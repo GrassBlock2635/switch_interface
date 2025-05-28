@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Switch</title>
+  <style>
+body {
+      background-color: #2d2d2d;
+      margin: 0;
+      padding: 0;
+      font-family: Verdana, sans-serif;
+    }
+.profilo {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      position: absolute;
+      top: 20px;
+      left: 100px;
+      object-fit: cover;
+      cursor: pointer;
+    }
+.bottom-panel {
+      position: fixed;
+      bottom: -50%;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background-color: #1f1f1f;
+      color: white;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.6);
+      transition: bottom 0.4s ease;
+      z-index: 999;
+      padding: 20px;
+      overflow: hidden;
+    }
+.bottom-panel.active {
+      bottom: 0;
+    }
+.profile-row {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+.profile-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+    }
+.profile-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+      margin-bottom: 10px;
+    }
+.add-profile {
+      background-color: #444;
+      border: none;
+      color: white;
+      font-size: 30px;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+.add-profile:hover {
+      background-color: #666;
+    }
+.orario {
+    text-align: right;
+      color: white;
+      font-family: Roboto;
+      margin-right: 90px;
+      margin-top: 28px;
+      font-size: 24px;
+    }
+.immagine1 {
+      width: 40px;
+      height: auto;
+      position: absolute;
+      top: 27px;
+      right: 132px;
+    }
+.battery-container {
+  width: 25px;
+  height: 10px;
+  border: 2px solid white;
+  position: absolute;
+  top: -10px;
+  right: 50px;
+  border-radius: 2px;
+  background-color: transparent;
+  margin: 50px auto;
+    }
+.battery-level {
+  height: 100%;
+  width: 100%;
+  transition: width 0.3s ease;
+  background-color: rgb(255, 255, 255); 
+}
+
+.battery-tip {
+      position: absolute;
+      top: 3px;
+      right: -7px;
+      width: 7px;
+      height: 50%;
+      background-color: white;
+      border-radius: 2px;
+    }
+#batteryText {
+      right: 50px;
+      font-weight: bold;
+      top: -20px;
+    }
+p {
+      color: rgb(255, 255, 255);
+      font-size: 18px;
+      font-family: Roboto;
+      text-align: right;
+      margin-right: 86px;
+      margin-top: -33px;
+    }
+.profile-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.profile-button:focus {
+  outline: none;
+}
+.quadrato {
+  flex: 0 0 auto;
+  width:380px;
+  height: 370px;
+  margin-left: 50px;
+  bottom: 75px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6); 
+  border-radius: 0px;
+}
+
+.rettangolo-pieno {
+  margin-left: 60px;
+  margin-top: 83px;
+  width:29px;
+  height: 30px;
+  position: absolute;
+  background-color: rgb(25, 189, 253);
+  border-radius: 2px;
+}
+.triangolo1 {
+  margin-left: 60px;
+  margin-top: 110px;
+  width: 18px;
+  height: 10px;
+  background-color: rgb(25, 189, 253);
+  position: absolute;
+  clip-path: polygon(0 0, 0 100%, 100% 100%);
+  border-radius: 2px;
+}
+.triangolo2 {
+  margin-left: 71px;
+  margin-top: 110px;
+  width: 18px;
+  height:10px;
+  background-color: rgb(25, 189, 253);
+  position: absolute;
+  clip-path: polygon(0 0, 0 100%, 100% 100%);
+  transform: scaleX(-1);
+  border-radius: 2px;
+}
+@keyframes scrollText {
+  0% { transform: translateX(20%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes scrollText {
+  0% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+.game-container {
+  position: absolute;
+  top: 150px;
+  left: 115px;
+  width: 300px; 
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.game {
+  display: inline-block;
+  color: rgb(25, 189, 253);
+  font-size: 40px;
+  font-family: Roboto;
+  animation: scrollText 10s linear infinite;
+}
+
+.carousel {
+  position: relative;
+  display: flex;
+  overflow-x: scroll;
+  gap: 20px; /* spazio tra i quadrati */
+  padding: 150px 100px 0 40px; /* 40px da sinistra */
+  cursor: grab;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  top: 75px;
+}
+
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-drag-zone {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 30px; 
+  width: 100%;
+  z-index: 10;
+}
+.quadrato img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+.porygon {
+  position: absolute;
+  bottom: 60px;
+  right: 25px;
+  z-index: 1000;
+}
+.porygon img {
+  width: 200px;
+  height:auto;
+}
+
+.kirby {
+  position: absolute;
+  top: 20px;
+  left: 600px;
+  z-index: 1000;
+}
+.kirby img {
+  width: 150px;
+  height:auto;
+}
+.link {
+  position: absolute;
+  bottom: 60px;
+  left: 50px;
+  z-index: 1000;
+}
+
+.link img {
+  width: 150px;
+  height:auto;
+}
+.luigi {
+  position: absolute;
+  top: 40px;
+  right: 600px;
+  z-index: 1000;
+}
+.luigi img {
+  width: 150px;
+  height:auto;
+}
+
+.carousel, .quadrato, .quadrato img {
+  user-select: none;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #2d2d2d;
+  padding: 15px 0;
+  z-index: 1000;
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.footer-logo {
+  position: absolute;
+  left: 20px;
+  height: 50px;
+}
+
+.footer-text {
+  color: white;
+  font-size: 14px;
+  text-align: center;
+}
+.indicator-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 100px;
+  margin-bottom: 120px;
+}
+
+.circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+}
+
+.circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none; 
+}
+
+
+  </style>
+</head>
+<body>
+  
+  <img src="base_icons/profile.png" class="profilo" alt="Profilo" onclick="toggleBottomPanel()">
+  <div class="bottom-panel" id="bottomPanel">
+    <div class="profile-row">
+      <div class="profile-item">
+        <button class="profile-button">
+        <img src="base_icons/profile.png" alt="Profilo" class="profile-icon">
+      </button>
+        <span>Nova</span>
+      </div>
+      <div class="profile-item">
+      <button class="add-profile">+</button>
+      <span>Add Profile</span>
+    </div>
+    </div>
+  </div>
+  <div class="orario">
+    <span class="orario" id="orario"></span>  
+  </div>  
+  <img src="base_icons/wifi.png" class="immagine1" alt="Wi-Fi">
+
+<div class="battery-container">
+    <div id="batteryLevel" class="battery-level" style="width: 100%;"></div>
+    <div class="battery-tip"></div>
+  </div>
+  <p id="batteryText">100%</p>
+
+  <div class="rettangolo-pieno"></div>
+  <div class="triangolo1"></div>
+  <div class="triangolo2"></div>
+ 
+  <div class="game-container">
+  <div class="game">The Legend of Zelda: Echoes of Wisdom</div>
+</div>
+
+
+  <div class="porygon">
+    <img src="base_icons/porygon.png" alt="Porygon">
+  </div>
+  <div class="kirby">
+    <img src="base_icons/kirby.png" alt="kirby">
+  </div>
+  <div class="link">
+    <img src="base_icons/link.png" alt="link">
+  </div>
+   <div class="luigi">
+    <img src="base_icons/luig.png" alt="luigi">
+   </div>
+  
+<div class="carousel" id="carousel">
+  <div class="carousel-drag-zone"></div>
+
+  <a href="https://www.nintendo.com/en-gb/Games/Nintendo-Switch-games/The-Legend-of-Zelda-Echoes-of-Wisdom-2590490.html" target="_blank" class="quadrato">
+    <img src="game_icons/zelda_eow.png" alt="Zelda: Echoes of Wisdom" draggable="false">
+  </a>
+  <a href="https://www.nintendo.com/en-gb/Games/Nintendo-Switch-games/Pokemon-Scarlet-2179556.html" target="_blank" class="quadrato">
+    <img src="game_icons/pokemon_scarlatto.png" alt="Pokémon Scarlatto" draggable="false">
+  </a>
+  <a href="https://www.youtube.com/watch?v=_-2dIuV34cs" target="_blank" class="quadrato">
+    <img src="game_icons/logic_paint_S.png" alt="lp" draggable="false">
+  </a>
+  <a href="https://animalcrossing.nintendo.com/new-horizons/buy/" target="_blank" class="quadrato">
+    <img src="game_icons/animal_crossing.png" alt="Animal Crossing" draggable="false">
+  </a>
+  <a href="https://www.nintendo.com/en-gb/Games/Nintendo-Switch-games/The-Legend-of-Zelda-Tears-of-the-Kingdom-1576884.html" target="_blank" class="quadrato">
+    <img src="game_icons/zelda_totk.png" alt="Zelda: Tears of the Kingdom" draggable="false">
+  </a>
+  <a href="https://www.nintendo.com/it-it/Giochi/Giochi-per-Nintendo-Switch/Minecraft-1386505.html" target="_blank" class="quadrato">
+    <img src="game_icons/minecraft.png" alt="minecraft" draggable="false">
+  </a>
+  <a href="https://www.nintendo.com/en-gb/Games/Nintendo-Switch-download-software/Spiritfarer-Farewell-Edition-1822685.html" target="_blank" class="quadrato">
+    <img src="game_icons/spiritfarer.png" alt="Spiritfarer" draggable="false">
+  </a>
+  <a href="https://www.nintendo.com/en-gb/Games/Nintendo-Switch-games/Pokemon-Legends-Arceus-1930510.html" target="_blank" class="quadrato">
+    <img src="game_icons/pokemon_arceus.png" alt="Pokémon Arceus" draggable="false">
+  </a>
+  <a href="https://www.nintendo.com/en-gb/Games/Nintendo-Switch-games/Mario-Kart-8-Deluxe-1174275.html" target="_blank" class="quadrato">
+    <img src="game_icons/mario_kart_world.png" alt="Mario Kart 8 Deluxe" draggable="false">
+  </a>
+  <a href="https://www.nintendo.com/en-gb/Games/Nintendo-Switch-games/Super-Mario-Party-1396033.html" target="_blank" class="quadrato">
+    <img src="game_icons/mario_party_jumboree.png" alt="Mario Party" draggable="false">
+  </a>
+  <a href="https://www.nintendo.com/en-gb/Games/Nintendo-Switch-games/EA-SPORTS-FC-25-2615178.html" target="_blank" class="quadrato">
+    <img src="game_icons/FC25.png" alt="FC25" draggable="false">
+  </a>
+    <a href="https://www.crunchyroll.com/offer-inpremium" target="_blank" class="quadrato">
+    <img src="game_icons/crunchyroll.png" alt="crunchy" draggable="false">
+    </a>
+  <a href="https://www.nintendo.com/it-it/Giochi/Giochi-per-Nintendo-Switch/Fire-Emblem-Three-Houses-1175482.html" target="_blank" class="quadrato">
+    <img src="game_icons/fire_emblem.png" alt="fie" draggable="false">
+  </a>
+</div>
+
+<div class="indicator-container">
+  <div class="circle"><img src="base_icons/nintendo.png" alt="Zelda"></div>
+  <div class="circle"><img src="base_icons/mex.png" alt="Pokémon"></div>
+  <div class="circle"><img src="base_icons/shop.png" alt="Animal Crossing"></div>
+  <div class="circle"><img src="base_icons/img.png" alt="Zelda 2"></div>
+  <div class="circle"><img src="base_icons/joy.png" alt="Spiritfarer"></div>
+  <div class="circle"><img src="base_icons/setting.png" alt="Pokémon Arceus"></div>
+  <div class="circle"><img src="base_icons/off.png" alt="Pokémon Arceus"></div>
+</div>
+
+
+
+<footer>
+  <div class="footer-content">
+    <img src="base_icons/ff.png" alt="Logo" class="footer-logo">
+    <span class="footer-text">&copy; 2025 Nintendo &reg;</span>
+  </div>
+</footer>
+
+
+  <script src="script.js"></script>
+  <script>
+    function toggleBottomPanel() {
+      const panel = document.getElementById('bottomPanel');
+      panel.classList.toggle('active');
+    }
+  </script>
+  <script>
+    const carousel = document.getElementById('carousel');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+  
+    carousel.addEventListener('mousedown', (e) => {
+      isDown = true;
+      carousel.classList.add('active');
+      startX = e.pageX - carousel.offsetLeft;
+      scrollLeft = carousel.scrollLeft;
+    });
+  
+    carousel.addEventListener('mouseleave', () => {
+      isDown = false;
+      carousel.classList.remove('active');
+    });
+  
+    carousel.addEventListener('mouseup', () => {
+      isDown = false;
+      carousel.classList.remove('active');
+    });
+  
+    carousel.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - carousel.offsetLeft;
+      const walk = (x - startX) * 2; 
+      carousel.scrollLeft = scrollLeft - walk;
+    });
+  </script>
+ <script>
+    let batteryLevel = 100; 
+
+    function updateBatteryUI() {
+      const levelBar = document.getElementById("batteryLevel");
+      const levelText = document.getElementById("batteryText");
+
+      levelBar.style.width = batteryLevel + "%";
+      levelText.textContent = batteryLevel + "%";
+    }
+
+    
+    setInterval(() => {
+      if (batteryLevel > 0) {
+        batteryLevel -= 1;
+        updateBatteryUI();
+      }
+    }, 60000); 
+
+    updateBatteryUI(); 
+  </script>
+
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+body {
+      background-color: #2d2d2d;
+      margin: 0;
+      padding: 0;
+      font-family: Verdana, sans-serif;
+    }
+  .profilo {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      position: absolute;
+      top: 20px;
+      left: 55px;
+      object-fit: cover;
+      cursor: pointer;
+    }
+  .bottom-panel {
+      position: fixed;
+      bottom: -50%;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background-color: #1f1f1f;
+      color: white;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.6);
+      transition: bottom 0.4s ease;
+      z-index: 999;
+      padding: 20px;
+      overflow: hidden;
+    }
+  .bottom-panel.active {
+      bottom: 0;
+    }
+  .profile-row {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+  .profile-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+    }
+  .profile-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+      margin-bottom: 10px;
+    }
+  .add-profile {
+      background-color: #444;
+      border: none;
+      color: white;
+      font-size: 30px;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+  .add-profile:hover {
+      background-color: #666;
+    }
+  .orario {
+    text-align: right;
+      color: white;
+      font-family: Roboto;
+      margin-right: 90px;
+      margin-top: 36px;
+      font-size: 24px;
+    }
+  .immagine1 {
+      width: 40px;
+      height: auto;
+      position: absolute;
+      top: 27px;
+      right: 132px;
+    }
+  .battery-container {
+      width: 25px;
+      height: 10px;
+      border: 2px solid white;
+      position: absolute;
+      top: 40px;
+      right: 50px;
+      border-radius: 2px;
+      background-color: transparent;
+    }
+  .battery-level {
+      height: 100%;
+      background-color: rgb(255, 255, 255);
+      width: 100%;
+      transition: width 0.5s;
+    }
+  .battery-tip {
+      position: absolute;
+      top: 3px;
+      right: -7px;
+      width: 7px;
+      height: 60;
+      background-color: white;
+      border-radius: 3px;
+    }
+
+  p {
+      color: white;
+      font-size: 18px;
+      font-family: Roboto;
+      text-align: right;
+      margin-right: 86px;
+      margin-top: -25px;
+    }
+  .profile-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+  .profile-button:focus {
+  outline: none;
+}
